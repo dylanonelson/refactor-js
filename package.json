@@ -1,0 +1,17 @@
+{
+  "name": "refactor-js",
+  "version": "0.1.0",
+  "description": "",
+  "bin": {
+    "refactor-js": "index.js"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "Dylan Nelson",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "jscodeshift": "^0.5.0",
+    "refactoring-codemods": "^0.3.4"
+  }
+}
