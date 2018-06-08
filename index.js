@@ -92,6 +92,7 @@ function mvFile([from, to]) {
 function readJsFiles(dir, regex) {
   const files = fs.readdirSync(dir)
   const test = str => ((regex || /\.m?jsx?$/).test(str));
+  const isNodeModule = str => /node_modules/.test(str);
 
   return files.reduce((acc, file) => {
     const fileName = path.resolve(dir, file);
@@ -99,7 +100,7 @@ function readJsFiles(dir, regex) {
     if (fs.lstatSync(fileName).isDirectory()) {
       acc.push(...readJsFiles(fileName, regex));
     }
-    if (test(file)) {
+    if (test(fileName) && !isNodeModule(fileName)) {
       acc.push(fileName);
     }
 
@@ -128,6 +129,9 @@ function updateOtherImports([from, to]) {
         to,
         `--printOptions=${recastPrintOptions}`,
       ],
+      {
+        stdio: 'inherit',
+      },
     );
     resolve([from, to]);
   });
@@ -148,6 +152,9 @@ function updateSelfImports([from, to]) {
         to,
         `--printOptions=${recastPrintOptions}`,
       ],
+      {
+        stdio: 'inherit',
+      },
     );
     resolve([from, to]);
   });
